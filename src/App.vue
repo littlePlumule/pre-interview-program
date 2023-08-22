@@ -1,7 +1,9 @@
-<script setup></script>
-
 <template>
-  <div>hello</div>
+  <main>
+    <TheTodo />
+  </main>
 </template>
 
-<style scoped></style>
+<script setup>
+import TheTodo from './pages/todo/TheTodo.vue'
+</script>
