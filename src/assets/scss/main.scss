@@ -41,7 +41,7 @@ h1 {
 
   input {
     width: 100%; 
-    padding: 1rem 1.5rem;
+    padding: 1rem 50px 1rem 1.5rem;
     border-radius: 1rem;
     font-size: 1rem;
     color: $black-color;
@@ -78,7 +78,7 @@ h1 {
 
   .filter {
     margin-right: .8rem;
-    transition: .8s;
+    transition: .5s;
     cursor: pointer;
 
     &.active {
@@ -99,31 +99,80 @@ h1 {
     padding: 1rem;
     border-radius: .5rem;
     color: $black-color;
-    position: relative;
     display: flex;
+    align-items: center;
+    gap: 1rem;
     box-shadow: 2px 2px .3rem #0007;
+    word-break: break-all;
     cursor: pointer;
 
     &.done {
       text-decoration: line-through;
       font-style: italic;
       color: $gray-color;
+
+      .todo-update,
+      .todo-delete {
+        color: $black-color;
+      }
+
+      .todo-update:hover {
+        color: $secondary-color;
+      }
+  
+      .todo-delete:hover {
+        color: $danger-color;
+      }
     }
 
-    input {
-      margin-right: 1rem;
-      visibility: hidden;
+    input[type='checkbox'] {
+      width: 0;
+      height: 0;
+      display: none;
 
       &:checked + span.check-button::after {
         opacity: 1;
       }
     }
+
+    .todo-content {
+      flex-grow: 1;
+    }
+
+    input[type='text'] {
+      flex-grow: 1;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid $black-color;
+    }
+
+    i {
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+
+    .todo-update,
+    .todo-delete {
+      border: none;
+      background-color: transparent;
+      transition: .2s;
+      cursor: pointer;
+    }
+
+    .todo-update:hover {
+      color: $secondary-color;
+    }
+
+    .todo-delete:hover {
+      color: $danger-color;
+    }
   }
 }
 
+// checkbox 按鈕樣式
 .check-button {
-  position: absolute;
-  top: 1rem;
+  width: 1.2rem;
+  height: 1.2rem;
 
   &::before,
   &::after {
@@ -145,3 +194,4 @@ h1 {
     opacity: 0;
   }
 }
+
