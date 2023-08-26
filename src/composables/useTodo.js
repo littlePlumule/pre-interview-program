@@ -1,19 +1,51 @@
+import { v4 as uuidv4 } from 'uuid'
 import { ref, computed } from 'vue'
+import { createTodo, editTodo, removeTodo } from '../api'
 
 export function useTodo() {
   const todoList = ref([])
 
   function addTodo(todo) {
-    todoList.value.push(todo)
+    createTodo(todo)
+      .then(res => {
+        todoList.value.push({
+          id: uuidv4(),
+          content: res.content,
+          completed: res.completed,
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  function updateTodo(todo) {
+    editTodo(todo)
+      .then(res => {
+        const targetIndex = todoList.value.findIndex(item => item.id === res.id)
+        todoList.value.splice(targetIndex, 1, res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   function deleteTodo(todoId) {
-    todoList.value = todoList.value.filter(todo => todo.id !== todoId)
+    removeTodo(todoId).then(res => {
+      switch (res.status) {
+        case 200:
+          todoList.value = todoList.value.filter(todo => todo.id !== todoId)
+          break
+        default:
+          return
+      }
+    })
   }
 
   return {
     todoList,
     addTodo,
+    updateTodo,
     deleteTodo,
   }
 }

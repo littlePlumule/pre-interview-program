@@ -1,16 +1,8 @@
 <template>
-  <label
-    v-for="todoItem in todoList"
-    :key="todoItem.id"
-    :class="['todo-item', { done: todoItem.completed }]"
-  >
-    <input
-      type="checkbox"
-      :checked="todoItem.completed"
-      @click="toggleTodoCompleted($event, todoItem)"
-    />
+  <label :class="['todo-item', { done: todoItem.completed }]">
+    <input type="checkbox" v-model="todoItem.completed" @change="updateTodo" />
     <span class="check-button"></span>
-    <p v-if="isUpdate !== todoItem.id" class="todo-content">
+    <p v-if="!isUpdate" class="todo-content">
       {{ todoItem.content }}
     </p>
     <input
@@ -18,16 +10,15 @@
       type="text"
       title="enter to update"
       :value="todoItem.content"
-      @input="contentUpdate = $event.target.value"
-      @blur="blurUpdate"
-      @keyup.enter="updateTodo(todoItem)"
+      @input="editContent = $event.target.value"
+      @keyup.enter="updateTodo"
     />
-    <button class="todo-update" title="update" @click="updating(todoItem)">
+    <button class="todo-update" title="edit" @click="isUpdate = !isUpdate">
       <i class="material-icons">edit</i>
     </button>
     <button
       class="todo-delete"
-      title="delete"
+      title="remove"
       @click="emits('delete-todo', todoItem.id)"
     >
       <i class="material-icons">delete</i>
@@ -38,38 +29,25 @@
 <script setup>
 import { ref } from 'vue'
 
-const emits = defineEmits(['delete-todo'])
+const emits = defineEmits(['delete-todo', 'update-todo'])
 const props = defineProps({
-  todoList: {
-    type: Array,
+  todoItem: {
+    type: Object,
   },
 })
 
-const isUpdate = ref(null)
-const contentUpdate = ref('')
+const { todoItem } = props
 
-function updating(todo) {
-  switch (isUpdate.value) {
-    case todo.id:
-      isUpdate.value = null
-      break
-    default:
-      isUpdate.value = todo.id
-  }
-}
+const isUpdate = ref(false)
+const editContent = ref(todoItem.content || '')
 
-function blurUpdate() {
-  isUpdate.value = null
-}
-
-function toggleTodoCompleted(event, todoItem) {
-  todoItem.completed = event.target.checked
-}
-
-function updateTodo(todoItem) {
-  if (contentUpdate.value.trim() === '') return
-  todoItem.content = contentUpdate.value
-  isUpdate.value = null
-  contentUpdate.value = null
+function updateTodo() {
+  todoItem.content = editContent.value
+  emits('update-todo', {
+    id: todoItem.id,
+    content: todoItem.content,
+    completed: todoItem.completed,
+  })
+  isUpdate.value = false
 }
 </script>

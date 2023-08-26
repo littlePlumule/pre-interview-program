@@ -6,14 +6,16 @@
 
     <TodoFilter :selected="selected" @change-filter="changeFilter" />
 
-    <div class="todo-list">
+    <div class="todo-list" v-if="filteredTodoList.length">
       <TodoItem
-        v-if="filteredTodoList.length"
-        :todoList="filteredTodoList"
+        v-for="todoItem in filteredTodoList"
+        :key="todoItem.id"
+        :todoItem="todoItem"
         @delete-todo="deleteTodo"
+        @update-todo="updateTodo"
       />
-      <div v-else class="nothing">No Any todo</div>
     </div>
+    <div v-else class="nothing">No Any todo</div>
   </div>
 </template>
 
@@ -23,6 +25,6 @@ import TodoFilter from './components/TodoFilter.vue'
 import TodoItem from './components/TodoItem.vue'
 import { useTodo, useTodoFilter } from '../../composables/useTodo'
 
-const { todoList, addTodo, deleteTodo } = useTodo()
+const { todoList, addTodo, updateTodo, deleteTodo } = useTodo()
 const { selected, changeFilter, filteredTodoList } = useTodoFilter(todoList)
 </script>
