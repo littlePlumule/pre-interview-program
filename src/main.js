@@ -1,5 +1,8 @@
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import './assets/scss/main.scss'
 import App from './App.vue'
+const isLoading = ref(false)
 
-createApp(App).mount('#app')
+const app = createApp(App)
+app.provide('isLoading', isLoading)
+app.mount('#app')
