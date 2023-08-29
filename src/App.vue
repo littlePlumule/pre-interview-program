@@ -23,11 +23,15 @@
 import TheTodo from './pages/todo/TheTodo.vue'
 import MealTime from './pages/mealtime/MealTime.vue'
 import TheLoading from './components/TheLoading.vue'
+import Topic3 from './pages/Topic3.vue'
+import Topic4 from './pages/Topic4.vue'
 import { ref } from 'vue'
 
 const components = {
   TheTodo,
   MealTime,
+  Topic3,
+  Topic4,
 }
 
 const currentComponent = ref('TheTodo')

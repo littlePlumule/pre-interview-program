@@ -56,7 +56,6 @@ main {
 
 .container {
   width: 720px;
-  // max-width: 800px;
   border-radius: 2rem;
   padding: 1.5rem 1.2rem 1.7rem;
   background-color: $white-color;
@@ -306,7 +305,7 @@ input[type="checkbox"].toggle {
   align-items: center;
 }
 
-
+// 下拉選單
 .select-block {
   position: relative;
   display: flex;
@@ -331,36 +330,32 @@ input[type="checkbox"].toggle {
     appearance: none;
     width: 100%;
     padding: 0.5rem 1rem;
-
-    // option {
-    //   display: block;
-    //   padding: .5rem 1rem;
-
-    //   &:hover{
-    //     background-color: $gray-dark-color;
-    //     color: $white-color;
-
-    //     &:disabled {
-    //       background-color: $gray-dark-color;
-    //       color: $white-color;
-    //       cursor: not-allowed
-    //     }
-    //   }
-    // }
   }  
+}
+
+// 顯示 code
+.column {
+  display: flex;
+  flex-direction: column;
 }
 
 .formatted-data {
   background-color: $gray-light-color;
   padding: 10px;
   border: 1px solid $gray-color;
+  display: block;
+
+  & + & {
+    margin-top: 10px;
+  }
 
   pre {
-    white-space: pre-wrap; /* 保留空格和换行 */
-    font-family: monospace; /* 使用等宽字体，提高可读性 */
+    white-space: pre-wrap;
+    font-family: monospace;
   }
 }
 
+//loading
 .overlay {
   position: fixed;
   inset: 0;
